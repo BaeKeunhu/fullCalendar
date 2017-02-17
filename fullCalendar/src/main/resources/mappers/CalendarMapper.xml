@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bae.kh.calendar.calendarMapper">
+<select id="calendarList" resultType="CalendarDTO">
+select
+* from
+calendar
+where emp_id = #{emp_id}
+</select>
+<select id="searchDept" resultType="CalendarDTO">
+select
+emp_id from
+employee
+where dept_no = (select dept_no from employee_info where emp_id = #{emp_id})
+and emp_id != #{emp_id}
+</select>
+<select id="maxNo" resultType="Integer">
+select max(calendar_no)
+from
+calendar
+</select>
+<insert id="insertCalendar" parameterType="CalendarDTO">
+insert
+into
+calendar(emp_id, calendar_no, title, color)
+values(#{emp_id}, cal_no_seq.nextval, #{title}, #{color})
+</insert>
+<insert id="calendarDeptInsert">
+insert
+into
+calendar (emp_id, calendar_no, start_day, end_day, title, color)
+values(#{emp_id}, cal_no_seq.nextval, #{start_day} ,#{end_day}, #{title}, #{color})
+</insert>
+<update id="calendarDropUpdate">
+update calendar
+set
+start_day=#{start_day}
+where calendar_no = #{calendar_no}
+</update>
+<update id="calendarUpdate">
+update calendar
+set
+end_day=#{end_day}
+where calendar_no = #{calendar_no}
+</update>
+<update id="calendarUpdateMove">
+update calendar
+set
+start_day=#{start_day}, end_day=#{end_day}
+where calendar_no = #{calendar_no}
+</update>
+<delete id="calendarDelete">
+delete
+from
+calendar
+where calendar_no=#{calendar_no} and emp_id=#{emp_id}
+</delete>
+</mapper>
