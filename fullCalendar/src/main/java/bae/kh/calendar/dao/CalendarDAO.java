@@ -1,8 +1,6 @@
 /*
 *개발자: 배근후
 *날짜: 2017.02.05
-*기술: 스캐너
-*네이밍: 
 *프로그램명: NS Intranet ver1.0
 */
 package bae.kh.calendar.dao;
